@@ -6,7 +6,6 @@ if(isset($_POST['submit'])){
 $name=htmlspecialchars(strtolower(trim($_POST['name'])));
 $email=htmlspecialchars(strtolower(trim($_POST['email'])));
 $password=htmlspecialchars(strtolower(trim(md5($_POST['password']))));
-// $password = password_hash($password, PASSWORD_DEFAULT); //encrypt password
 $query= "INSERT INTO signup(Name,Email,Password) 
         VALUES('$name','$email','$password')";
         mysqli_query($conn,$query);
@@ -55,13 +54,6 @@ $query= "INSERT INTO signup(Name,Email,Password)
         </div>
     </div>
 </form>
-    <!-- <form action = "" method ="POST">
-        <input type="text" name="name" placeholder="enter your name" required><br><br>
-        <input type="email" name="email" placeholder="enter your email" required><br><br>
-        <input type="password" name="password" placeholder="enter your password" required><br><br>
-					
-		<button type="submit" name="submit">Signup</button>
-    </form>				 -->
 					
 					
 </body>
