@@ -10,7 +10,7 @@ mysqli_query($conn,$query);
 if(isset($_POST['submit']))
 {
     $name=$_POST['name'];
-    $password=$_POST['password'];
+    $password=md5($_POST['password']);
 
     $sql = "SELECT * FROM signup WHERE Name='$name' && Password='$password'";
     // $result = mysqli_query($conn,$sql);

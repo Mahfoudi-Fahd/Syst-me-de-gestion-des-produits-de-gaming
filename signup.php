@@ -5,7 +5,7 @@ include("connect.php");
 if(isset($_POST['submit'])){
 $name=htmlspecialchars(strtolower(trim($_POST['name'])));
 $email=htmlspecialchars(strtolower(trim($_POST['email'])));
-$password=htmlspecialchars(strtolower(trim($_POST['password'])));
+$password=htmlspecialchars(strtolower(trim(md5($_POST['password']))));
 // $password = password_hash($password, PASSWORD_DEFAULT); //encrypt password
 $query= "INSERT INTO signup(Name,Email,Password) 
         VALUES('$name','$email','$password')";
