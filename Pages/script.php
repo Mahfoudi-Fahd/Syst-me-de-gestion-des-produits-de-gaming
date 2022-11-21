@@ -1,16 +1,22 @@
 <?php
     //INCLUDE DATABASE FILE
-    include('connect.php');
+    include'connect.php';
     //SESSSION IS A WAY TO STORE DATA TO BE USED ACROSS MULTIPLE PAGES
 
     //ROUTING
-    if(isset($_POST['save']))        saveproduct();
+    if(isset($_POST['save']))        saveProduct();
     if(isset($_POST['update']))      updateTask();
     if(isset($_POST['delete']))      deleteTask();
     
 
-    function getTasks($status)
+    function ShowProduct($status)
     {
+
+        $sql="SELECT * FROM product";
+
+        $result=mysqli_query($conn,$sql);
+        return $result;
+        }
     //    echo '<tr>
     //             <th scope="row">1</th>
     //             <td>Mark</td>
@@ -18,7 +24,7 @@
     //             <td>@mdo</td>       
     //         </tr>'  
         //SQL SELECT
-    }
+    
 
 
 //     function countTask($nb) 
@@ -36,32 +42,20 @@
                 
     function saveProduct()
     {
-        global $conn;
+        
             
-            $name     = ($_POST['name']);
-            $category = ($_POST['category']);
-            $price    = ($_POST['price']);
-            $status   = ($_POST['status']);
+            $name       = ($_POST['name']);
+            $price      = ($_POST['price']);
+            $status      = ($_POST['status']);
+            $category   = ($_POST['category']);
           
-          $sql= "INSERT INTO product(name,category,price,status) 
-          VALUES ('$name','$category','$price','$status')";
+           $sql= "INSERT INTO products(name,price,status,category_id) 
+            VALUES ('$name','$price','$status','$category')";
+
+          global $conn;
+
            mysqli_query($conn,$sql);
-            header('location:dashboard.php');
 
-
-
-
-
-
-
-
-
-
-
-           
-
-
-           
         }
         
 

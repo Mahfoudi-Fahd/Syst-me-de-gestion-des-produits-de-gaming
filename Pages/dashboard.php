@@ -60,8 +60,8 @@ if(!isset($_SESSION['name'])){
 
         </ul>
     </nav>
-    <section class="p-5 my-container">
-        <button class="btn my-4" id="menu-btn"><i class="fa fa-bars"></i></button>
+    <section class=" my-container">
+        <button class="btn " id="menu-btn"><i class="fa fa-bars"></i></button>
     </section>
     <!-- CARDS -->
 
@@ -106,8 +106,15 @@ if(!isset($_SESSION['name'])){
                     </tr>
                 </thead>
                 <tbody>
-
-                
+                    
+                <tr>
+                    <th scope="row"><?php echo $product['name'] ?></th>
+                    <td> <?php echo $product['price'] ?> </td>
+                    <td> <?php echo $product['status'] ?> </td>
+                    <td> <?php echo $product['category'] ?> </td>
+                </tr>
+                </tbody>
+                </table>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -121,10 +128,24 @@ if(!isset($_SESSION['name'])){
                                 </div>
                                 <div class="modal-body">
                                     <div class="container">
-                                        <form action="script.php" method="post">
+                                        <form action="#" method="POST">
                                             <div class="form-group mt-2">
                                                 <label>Name</label>
                                                 <input class="form-control" name="name" placeholder="Product Name">
+                                            </div>
+                                           
+                                            <div class="form-group mt-2">
+                                                <label for="exampleFormControlTextarea1">Price</label>
+                                                <input class="form-control" name="price" placeholder="Price">
+                                            </div>
+                                            
+
+                                            <div class="form-group mt-2">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control">
+                                                    <option value="1">In stock</option>
+                                                    <option value="2">Out of stock</option>
+                                                </select>
                                             </div>
                                             <div class="form-group mt-2">
                                                 <label>Category</label>
@@ -134,18 +155,6 @@ if(!isset($_SESSION['name'])){
                                                     <option value="2">Accessories</option>
                                                     <option value="3">Consoles</option>
                                                     <option value="4">Composants</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group mt-2">
-                                                <label for="exampleFormControlTextarea1">Price</label>
-                                                <input class="form-control" name="price" placeholder="Price">
-                                            </div>
-
-                                            <div class="form-group mt-2">
-                                                <label>Status</label>
-                                                <select name="status" class="form-control">
-                                                    <option value="1">In stock</option>
-                                                    <option value="2">Out of stock</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
