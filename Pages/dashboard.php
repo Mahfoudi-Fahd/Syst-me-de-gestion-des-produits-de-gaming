@@ -108,10 +108,9 @@ if(!isset($_SESSION['name'])){
                 <tbody>
                     
                 <tr>
-                    <th scope="row"><?php echo $product['name'] ?></th>
-                    <td> <?php echo $product['price'] ?> </td>
-                    <td> <?php echo $product['status'] ?> </td>
-                    <td> <?php echo $product['category'] ?> </td>
+                    <?php
+                ShowProduct();
+                ?>
                 </tr>
                 </tbody>
                 </table>

@@ -9,13 +9,23 @@
     if(isset($_POST['delete']))      deleteTask();
     
 
-    function ShowProduct($status)
+    function ShowProduct()
     {
 
-        $sql="SELECT * FROM product";
-
+global $conn;
+        $sql="SELECT products.* , categories.name as category FROM products INNER JOIN categories ON products.category_id = categories.id";
         $result=mysqli_query($conn,$sql);
-        return $result;
+      if($result){
+        while($row=mysqli_fetch_assoc($result)){
+            echo '<tr>
+                 <th scope="row">'.$row['name'].'</th>
+                 <td>'.$row['category'].'</td>
+                 <td>'.$row['price'].'</td>
+                <td>'.$row['status'].'</td>       
+            </tr>'; 
+        }
+      }
+      
         }
     //    echo '<tr>
     //             <th scope="row">1</th>
