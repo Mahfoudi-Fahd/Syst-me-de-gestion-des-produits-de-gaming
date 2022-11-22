@@ -53,8 +53,7 @@ if(!isset($_SESSION['name'])){
                 <a href="#" class="nav-link dropdown-toggle text-light pl-4" id="navbarDropdown" role="button"
                     data-toggle="dropdown" aria-expanded="false">Profile</a>
                 <ul class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
-                    <li><a href="#" class="dropdown-item text-light pl-4 p-2">Settings</a></li>
-                    <li><a href="#" class="dropdown-item text-light pl-4 p-2">Service 02</a></li>
+                   
                     <li><a href="logout.php" class="dropdown-item text-light pl-4 p-2">Signout</a></li>
                 </ul>
             </li>
@@ -71,7 +70,7 @@ if(!isset($_SESSION['name'])){
             <div class="card col-md-12 col-12 mt-5 ms-2 me-3" style=" background-color: #5e5e5e">
                 <div class=" card-body">
                     <h4 class="card-title text-center text-white">Total Products</h4>
-                    <h4 class="card-text text-center text-white">0</h4>
+                    <h4 class="card-text text-center text-white"><?php countTask()?></h4>
                 </div>
             </div>
             <div class="card col-md col-12 mt-5  ms-2 me-3" style="  background-color: #5e5e5e;">
@@ -90,7 +89,7 @@ if(!isset($_SESSION['name'])){
         </div>
     
             <!-- Button trigger modal -->
-            <button type="button" class="addProduct btn btn-outline-secondary container m-5" data-toggle="modal"
+            <button type="button" onclick="add()" class="addProduct btn btn-outline-secondary container m-5" data-toggle="modal"
                 data-target="#exampleModal">
                 Add Product
             </button>
@@ -101,9 +100,10 @@ if(!isset($_SESSION['name'])){
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Product Name</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Category</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">quantity</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -129,10 +129,10 @@ if(!isset($_SESSION['name'])){
                                 </div>
                                 <div class="modal-body">
                                     <div class="container">
-                                        <form action="script.php" method="POST">
+                                        <form action="script.php" id="form" method="POST" enctype="multipart/form-data">
                               
                                             <div class="form-group mt-2">
-                                                <input class="form-control" id="id" name="id" type="text">
+                                                <input class="form-control" id="id" name="id" type="hidden">
                                                 <label>Name</label>
                                                 <input class="form-control" id="name" name="name" placeholder="Product Name">
                                             </div>
@@ -144,12 +144,10 @@ if(!isset($_SESSION['name'])){
                                             
 
                                             <div class="form-group mt-2">
-                                                <label>Status</label>
-                                                <select name="status" class="form-control">
-                                                    <option value="1">In stock</option>
-                                                    <option value="2">Out of stock</option>
-                                                </select>
+                                            <label for="exampleFormControlTextarea1">Quantity</label>
+                                                <input class="form-control" id="quantity" name="quantity" placeholder="Quantity">
                                             </div>
+                                            
                                             <div class="form-group mt-2">
                                                 <label>Category</label>
                                                 <select name="category" class="form-control">
@@ -162,14 +160,14 @@ if(!isset($_SESSION['name'])){
                                             </div>
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label">Product Image</label>
-                                                <input class="form-control" type="file" id="formFile">
+                                                <input class="form-control" name="image" type="file" id="formFile">
                                             </div>
                                             <div class="modal-footer mt-2">
                                                 <button type="submit" class="btn btn-secondary"
                                                     data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-info" value="Save changes"
+                                                <input type="submit" id="save_button" class="btn btn-info" value="Save changes"
                                                     name="save">
-                                                <input type="submit" class="btn btn-info" value="Update changes"
+                                                <input type="submit" id="update_button" class="btn btn-info" value="Update changes"
                                                     name="update">
 
                                             </div>
@@ -197,13 +195,24 @@ if(!isset($_SESSION['name'])){
 
 
 
-                            function updateProduct(id, name, category, price) {
+                            function updateProduct(id, name, category, price, quantity) {
+
+
+                                document.getElementById("update_button").style.display = "block";
+                                document.getElementById("save_button").style.display = "none";
                                 document.getElementById("id").value = id;
                                 document.getElementById("name").value = name;
                                 document.getElementById("price").value = price;
                                 document.getElementById(category).selected = true;
-                                // document.getElementById("status").selected = true;
+                                document.getElementById("quantity").value= quantity;
+                                   
                             }
+                            function add(){
+                                document.getElementById("form").reset();
+                                document.getElementById("update_button").style.display = "none";
+                                document.getElementById("save_button").style.display = "block";
+                            }
+                            
                             </script>
 </div>
 </body>

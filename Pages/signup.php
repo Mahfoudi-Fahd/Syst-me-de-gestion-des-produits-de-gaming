@@ -12,8 +12,6 @@ $query= "INSERT INTO signup(Name,Email,Password)
         header("location:signin.php");
 }
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

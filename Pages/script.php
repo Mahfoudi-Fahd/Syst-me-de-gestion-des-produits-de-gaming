@@ -6,7 +6,7 @@
     //ROUTING
     if(isset($_POST['save']))        saveProduct();
     if(isset($_POST['update']))      updateProduct();
-    if(isset($_POST['delete']))      deleteTask();
+    if(isset($_POST['delete']))      deleteProduct();
     
 
     function ShowProduct()
@@ -23,14 +23,17 @@
         while($row=mysqli_fetch_assoc($result)){
             echo "<tr>
                  <th scope=\"row\">".$row['name']."</th>
+                 <td>
+                 <img style='height:50px;' class=\"f \" src=\"./img/".$row['image']."\">
+                 </td>
                  <td>".$row['category']."</td>
                  <td>".$row['price']."</td>
-                <td>".$row['status']."</td>
+                <td>".$row["quantity"]."</td>
                 <form action=\"script.php\" method=\"post\">
                     <td>
                     <button type=\"submit\" class=\"btn btn-outline-secondary\" name=\"delete\" value=\"".$row['id']."\"><i class=\"fa fa-trash \" aria-hidden=\"true \"></i></button>
                     <button type=\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\" class=\"btn btn-outline-secondary\" name=\"update\" 
-                    onclick=\"updateProduct(".$row["id"].",'".$row["name"]."','".$row["id_cat"]."','".$row["price"]."')\" 
+                    onclick=\"updateProduct(".$row["id"].",'".$row["name"]."','".$row["id_cat"]."','".$row["price"]."','".$row["quantity"]."')\" 
                     value=\"".$row['id']."\"><i class=\"fas fa-edit\"></i></button>
                     </td>
                 </form>      
@@ -40,19 +43,19 @@
       
         }
       
-        // onclick="updateProduct('.$row['id'].','.$row['name'].','.$row['category'].','.$row['price'].','.$row['status'].')"
 
-//     function countTask($nb) 
-// {
-//     include('database.php');
+
+    function countTask() 
+{
+ global $conn;
    
-//     $sql = "SELECT  COUNT(*) As nbrow from tasks where status_id=$nb";
+    $sql = "SELECT  COUNT(*) As nbrow from products";
             
-//     $query=mysqli_query($conn, $sql);
-//     $row=mysqli_fetch_assoc($query);
-//     echo $row['nbrow'];
+    $query=mysqli_query($conn, $sql);
+    $row=mysqli_fetch_assoc($query);
+    echo $row['nbrow'];
 
-// }
+}
 
                 
     function saveProduct()
@@ -61,12 +64,16 @@
             
             $name       = ($_POST['name']);
             $price      = ($_POST['price']);
-            $status      = ($_POST['status']);
             $category   = ($_POST['category']);
-          
-           $sql= "INSERT INTO products(name,price,status,category_id) 
-            VALUES ('$name','$price','$status','$category')";
+            $quantity      = ($_POST['quantity']);
 
+            $image      = ($_FILES['image']['name']);
+            $target = "img/" . $image;
+          
+           $sql= "INSERT INTO products(name,image,price,category_id,quantity) 
+            VALUES ('$name','$image','$price','$category','$quantity')";
+
+            move_uploaded_file($_FILES['image']['tmp_name'],$target);
           
 
         mysqli_query($conn,$sql);
@@ -82,11 +89,20 @@
         $name = $_POST['name'];
         $price = $_POST['price'];
         $category = $_POST['category'];
+        $quantity = $_POST['quantity'];
 
-       
-        //CODE HERE
-    
-        $update = "UPDATE  products SET  `name`='$name',`price`='$price',`category_id`='$category' WHERE id = '$id'";
+        $image      = ($_FILES['image']['name']);
+        if (empty($image)) {
+            # code...
+            $update = "UPDATE  products SET  `name`='$name',`price`='$price',`category_id`='$category',`quantity`='$quantity' WHERE id = '$id'";
+        }else{
+            $target = "img/" . $image;
+            move_uploaded_file($_FILES['image']['tmp_name'],$target);
+            $update = "UPDATE  products SET  `name`='$name',`image` = '$image',`price`='$price',`category_id`='$category',`quantity`='$quantity' WHERE id = '$id'";
+
+        }        //CODE HERE
+        
+        
         
         
         //SQL UPDATE
@@ -99,7 +115,7 @@
 
 
 
-    function deleteTask()
+    function deleteProduct()
 {
 // //     //CODE HERE
 //     require 'connect.php';
