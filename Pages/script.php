@@ -5,37 +5,42 @@
 
     //ROUTING
     if(isset($_POST['save']))        saveProduct();
-    if(isset($_POST['update']))      updateTask();
+    if(isset($_POST['update']))      updateProduct();
     if(isset($_POST['delete']))      deleteTask();
     
 
     function ShowProduct()
     {
 
-global $conn;
-        $sql="SELECT products.* , categories.name as category FROM products INNER JOIN categories ON products.category_id = categories.id";
+        global $conn;
+
+        //SQL SELECT
+
+        $sql="SELECT products.* , categories.id as id_cat ,categories.name as category FROM products INNER JOIN categories ON products.category_id = categories.id";
         $result=mysqli_query($conn,$sql);
-      if($result){
+      
+        if($result){
         while($row=mysqli_fetch_assoc($result)){
-            echo '<tr>
-                 <th scope="row">'.$row['name'].'</th>
-                 <td>'.$row['category'].'</td>
-                 <td>'.$row['price'].'</td>
-                <td>'.$row['status'].'</td>       
-            </tr>'; 
+            echo "<tr>
+                 <th scope=\"row\">".$row['name']."</th>
+                 <td>".$row['category']."</td>
+                 <td>".$row['price']."</td>
+                <td>".$row['status']."</td>
+                <form action=\"script.php\" method=\"post\">
+                    <td>
+                    <button type=\"submit\" class=\"btn btn-outline-secondary\" name=\"delete\" value=\"".$row['id']."\"><i class=\"fa fa-trash \" aria-hidden=\"true \"></i></button>
+                    <button type=\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\" class=\"btn btn-outline-secondary\" name=\"update\" 
+                    onclick=\"updateProduct(".$row["id"].",'".$row["name"]."','".$row["id_cat"]."','".$row["price"]."')\" 
+                    value=\"".$row['id']."\"><i class=\"fas fa-edit\"></i></button>
+                    </td>
+                </form>      
+            </tr>"; 
         }
       }
       
         }
-    //    echo '<tr>
-    //             <th scope="row">1</th>
-    //             <td>Mark</td>
-    //             <td>Otto</td>
-    //             <td>@mdo</td>       
-    //         </tr>'  
-        //SQL SELECT
-    
-
+      
+        // onclick="updateProduct('.$row['id'].','.$row['name'].','.$row['category'].','.$row['price'].','.$row['status'].')"
 
 //     function countTask($nb) 
 // {
@@ -52,7 +57,7 @@ global $conn;
                 
     function saveProduct()
     {
-        
+        global $conn;
             
             $name       = ($_POST['name']);
             $price      = ($_POST['price']);
@@ -62,44 +67,47 @@ global $conn;
            $sql= "INSERT INTO products(name,price,status,category_id) 
             VALUES ('$name','$price','$status','$category')";
 
-          global $conn;
+          
 
-           mysqli_query($conn,$sql);
-
-        }
+        mysqli_query($conn,$sql);
+        header('location:dashboard.php');
+    }
         
 
-//     function updateTask()
-//      {
-//         require 'database.php';
-//         $id = $_POST['index'];
-//         $title = $_POST['title'];
-//         $type = $_POST['tasktype'];
-//         $priority = $_POST['priority'];
-//         $status = $_POST['status'];
-//         $date = $_POST['date'];
-//         $description = $_POST['description'];
+    function updateProduct()
+     {
+        
+        global $conn;
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $category = $_POST['category'];
+
        
-//         //CODE HERE
+        //CODE HERE
     
-//         $upd = "UPDATE  `tasks` SET  `title`='$title',`type_id`='$type',`priority_id`='$priority',`status_id`='$status',`task_datetime`='$date',`description`='$description' WHERE id = '$id'";
-//         mysqli_query($conn, $upd);
+        $update = "UPDATE  products SET  `name`='$name',`price`='$price',`category_id`='$category' WHERE id = '$id'";
         
-//         //SQL UPDATE
         
-//         $_SESSION['message'] = "Task has been updated successfully !";
-//         header('location: index.php');
-//  }
+        //SQL UPDATE
+        if(mysqli_query($conn, $update)){
+            header('location: dashboard.php');
+        }else{
+            echo "erreur lors de la modification";
+        }
+ }
 
-//     function deleteTask()
-// {
-//     //CODE HERE
-//     require 'database.php';
-//     $id = $_POST['index'];
-//     $del = "DELETE FROM tasks where id='$id'";
-//     $query = mysqli_query($conn, $del);
-//     //SQL DELETE
-//     $_SESSION['message'] = "Task has been deleted successfully !";
-//     header('location: index.php');
-// }
-// ?>
+
+
+    function deleteTask()
+{
+// //     //CODE HERE
+//     require 'connect.php';
+global $conn;
+    $id = $_POST['delete'];
+    $del = "DELETE FROM products where id='$id'";
+    $query = mysqli_query($conn, $del);
+
+    header('location: dashboard.php');
+}
+ ?>

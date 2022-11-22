@@ -26,6 +26,7 @@ if(!isset($_SESSION['name'])){
 
 <body class="bg-image d-flex ">
 
+<!-- sideBar  -->
 
     <nav class="navbar navbar-dark bg-dark">
         <nav class="navbar navbar-light bg-light justify-content-between">
@@ -61,7 +62,7 @@ if(!isset($_SESSION['name'])){
         </ul>
     </nav>
     <section class=" my-container">
-        <button class="btn " id="menu-btn"><i class="fa fa-bars"></i></button>
+        <button class="btn" id="menu-btn"><i class="fa fa-bars"></i></button>
     </section>
     <!-- CARDS -->
 
@@ -103,6 +104,7 @@ if(!isset($_SESSION['name'])){
                         <th scope="col">Category</th>
                         <th scope="col">Price</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,7 +117,7 @@ if(!isset($_SESSION['name'])){
                 </tbody>
                 </table>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -127,15 +129,17 @@ if(!isset($_SESSION['name'])){
                                 </div>
                                 <div class="modal-body">
                                     <div class="container">
-                                        <form action="#" method="POST">
+                                        <form action="script.php" method="POST">
+                              
                                             <div class="form-group mt-2">
+                                                <input class="form-control" id="id" name="id" type="text">
                                                 <label>Name</label>
-                                                <input class="form-control" name="name" placeholder="Product Name">
+                                                <input class="form-control" id="name" name="name" placeholder="Product Name">
                                             </div>
                                            
                                             <div class="form-group mt-2">
                                                 <label for="exampleFormControlTextarea1">Price</label>
-                                                <input class="form-control" name="price" placeholder="Price">
+                                                <input class="form-control" id="price" name="price" placeholder="Price">
                                             </div>
                                             
 
@@ -150,10 +154,10 @@ if(!isset($_SESSION['name'])){
                                                 <label>Category</label>
                                                 <select name="category" class="form-control">
                                                     <option value="">Please select</option>
-                                                    <option value="1">Pc Gamer</option>
-                                                    <option value="2">Accessories</option>
-                                                    <option value="3">Consoles</option>
-                                                    <option value="4">Composants</option>
+                                                    <option value="1" id="1">Accessories</option>
+                                                    <option value="2" id="2">Consoles</option>
+                                                    <option value="3" id="3">Composants</option>
+                                                    <option value="4" id="4">Pc Gamer</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
@@ -165,6 +169,8 @@ if(!isset($_SESSION['name'])){
                                                     data-dismiss="modal">Close</button>
                                                 <input type="submit" class="btn btn-info" value="Save changes"
                                                     name="save">
+                                                <input type="submit" class="btn btn-info" value="Update changes"
+                                                    name="update">
 
                                             </div>
                                         </form>
@@ -188,6 +194,16 @@ if(!isset($_SESSION['name'])){
                                 sidebar.classList.toggle("active-nav")
                                 container.classList.toggle("active-cont")
                             })
+
+
+
+                            function updateProduct(id, name, category, price) {
+                                document.getElementById("id").value = id;
+                                document.getElementById("name").value = name;
+                                document.getElementById("price").value = price;
+                                document.getElementById(category).selected = true;
+                                // document.getElementById("status").selected = true;
+                            }
                             </script>
 </div>
 </body>
