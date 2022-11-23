@@ -18,11 +18,7 @@ if(isset($_POST['submit']))
         $_SESSION['name']=$name;
         header("Location:dashboard.php");
     }
-    // if($result)
-    // {
-    //     $row = mysqli_fetch_assoc($result);
-    //     $_SESSION["name"]=$row["Name"];
-    //     header("Location:dashboard.php");}
+   
     else
     {
     echo "incorrect inputs";
@@ -71,16 +67,7 @@ if(isset($_POST['submit']))
         </div>
     </div>
 </form>
-    <!-- <form action = "" method ="POST">
-    <div class="form-outline mb-4">
-        <input type="text" name="name" placeholder="enter your name" required>
-        </div>
-        <div class="form-outline mb-4">
-        <input type="password" name="password" placeholder="enter your password" required>
-        </div>
-		<button class="btn btn-primary btn-block mb-4" type="submit" name="submit">Signin</button>
-    </form>				 -->
-					
+  
 					
 </body>
 </html>

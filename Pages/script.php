@@ -23,12 +23,15 @@
         while($row=mysqli_fetch_assoc($result)){
             echo "<tr>
                  <th scope=\"row\">".$row['name']."</th>
+
                  <td>
                  <img style='height:50px;' class=\"f \" src=\"./img/".$row['image']."\">
                  </td>
-                 <td>".$row['category']."</td>
-                 <td>".$row['price']."</td>
+
+                <td>".$row['category']."</td>
+                <td>".$row['price']."</td>
                 <td>".$row["quantity"]."</td>
+
                 <form action=\"script.php\" method=\"post\">
                     <td>
                     <button type=\"submit\" class=\"btn btn-outline-secondary\" name=\"delete\" value=\"".$row['id']."\"><i class=\"fa fa-trash \" aria-hidden=\"true \"></i></button>
@@ -45,7 +48,7 @@
       
 
 
-    function countTask() 
+    function countProduct() 
 {
  global $conn;
    
@@ -93,24 +96,19 @@
 
         $image      = ($_FILES['image']['name']);
         if (empty($image)) {
-            # code...
+            # code
             $update = "UPDATE  products SET  `name`='$name',`price`='$price',`category_id`='$category',`quantity`='$quantity' WHERE id = '$id'";
         }else{
             $target = "img/" . $image;
             move_uploaded_file($_FILES['image']['tmp_name'],$target);
             $update = "UPDATE  products SET  `name`='$name',`image` = '$image',`price`='$price',`category_id`='$category',`quantity`='$quantity' WHERE id = '$id'";
 
-        }        //CODE HERE
+        }       
         
-        
-        
-        
-        //SQL UPDATE
-        if(mysqli_query($conn, $update)){
+       
+     mysqli_query($conn, $update);
             header('location: dashboard.php');
-        }else{
-            echo "erreur lors de la modification";
-        }
+       
  }
 
 
@@ -125,5 +123,33 @@ global $conn;
     $query = mysqli_query($conn, $del);
 
     header('location: dashboard.php');
+}
+
+
+//Min Price counter
+function counterMin(){
+    global $conn;
+    $query= "SELECT MIN(price)
+            FROM products";
+    $result=mysqli_query($conn, $query);
+
+    $result= mysqli_fetch_array($result);
+
+    return $result[0];
+
+}
+
+
+//Max Price counter
+function counterMax(){
+    global $conn;
+    $query= "SELECT MAX(price)
+    FROM products";
+
+$result=mysqli_query($conn, $query);
+
+$result= mysqli_fetch_array($result);
+
+return $result[0];
 }
  ?>

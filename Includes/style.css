@@ -2,6 +2,7 @@ body{
     height: 100vh;
 }
 .bg-image{
+    background-color: #eaeaea;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -70,4 +71,9 @@ body{
 }
 .addProduct{
     width: 10rem;
+}
+.alert{
+    text-align: left;
+    font-size: 2rem;
+    font-weight: bold;
 }

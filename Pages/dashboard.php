@@ -16,16 +16,20 @@ if(!isset($_SESSION['name'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Origin Gamer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../includes/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+    <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css"/>
+    <script defer  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script defer src="https://parsleyjs.org/dist/parsley.min.js"></script>
 </head>
 
 <body class="bg-image d-flex ">
-
+            
 <!-- sideBar  -->
 
     <nav class="navbar navbar-dark bg-dark">
@@ -63,27 +67,30 @@ if(!isset($_SESSION['name'])){
     <section class=" my-container">
         <button class="btn" id="menu-btn"><i class="fa fa-bars"></i></button>
     </section>
+
+
     <!-- CARDS -->
 
     <div class=" container">
+                <div class="alert" role="alert"> welcome <?php echo $_SESSION['name'] ?></div>
         <div class="cards row mx-auto">
             <div class="card col-md-12 col-12 mt-5 ms-2 me-3" style=" background-color: #5e5e5e">
                 <div class=" card-body">
                     <h4 class="card-title text-center text-white">Total Products</h4>
-                    <h4 class="card-text text-center text-white"><?php countTask()?></h4>
+                    <h4 class="card-text text-center text-white"><?php countProduct();?></h4>
                 </div>
             </div>
             <div class="card col-md col-12 mt-5  ms-2 me-3" style="  background-color: #5e5e5e;">
                 <div class="card-body">
-                    <h4 class="card-title text-center text-white">Products In Stock</h4>
-                    <h4 class="card-text text-center text-white">0</h4>
+                    <h4 class="card-title text-center text-white">Min Price</h4>
+                    <h4 class="card-text text-center text-white"><?php echo counterMin();?></h4>
                 </div>
             </div>
 
             <div class="card col-md col-12 mt-5 ms-2 me-3" style=" background-color:#5e5e5e">
                 <div class="card-body">
-                    <h4 class="card-title text-center text-white">Products Out Of Stock</h4>
-                    <h4 class="card-text text-center text-white">0</h4>
+                    <h4 class="card-title text-center text-white">Max Price</h4>
+                    <h4 class="card-text text-center text-white"><?php echo counterMax()?></h4>
                 </div>
             </div>
         </div>
@@ -94,6 +101,7 @@ if(!isset($_SESSION['name'])){
                 Add Product
             </button>
 
+            
             <!-- Table -->
 
             <table class="table">
@@ -107,15 +115,15 @@ if(!isset($_SESSION['name'])){
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
+                
                 <tbody>
-                    
                 <tr>
-                    <?php
+                <?php
                 ShowProduct();
                 ?>
                 </tr>
                 </tbody>
-                </table>
+            </table>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,28 +137,28 @@ if(!isset($_SESSION['name'])){
                                 </div>
                                 <div class="modal-body">
                                     <div class="container">
-                                        <form action="script.php" id="form" method="POST" enctype="multipart/form-data">
+                                        <form action="script.php" id="form" method="POST" enctype="multipart/form-data" data-parsley-validate>
                               
                                             <div class="form-group mt-2">
                                                 <input class="form-control" id="id" name="id" type="hidden">
                                                 <label>Name</label>
-                                                <input class="form-control" id="name" name="name" placeholder="Product Name">
+                                                <input class="form-control" id="name" name="name" placeholder="Product Name" data-parsley-trigger="keyup" required>
                                             </div>
                                            
                                             <div class="form-group mt-2">
                                                 <label for="exampleFormControlTextarea1">Price</label>
-                                                <input class="form-control" id="price" name="price" placeholder="Price">
+                                                <input class="form-control" id="price" name="price" placeholder="Price" type="number" data-parsley-type="integer" data-parsley-trigger="keyup" required>
                                             </div>
                                             
 
                                             <div class="form-group mt-2">
                                             <label for="exampleFormControlTextarea1">Quantity</label>
-                                                <input class="form-control" id="quantity" name="quantity" placeholder="Quantity">
+                                                <input class="form-control" id="quantity" name="quantity" placeholder="Quantity" type="number" data-parsley-type="integer" data-parsley-trigger="keyup" required>
                                             </div>
                                             
                                             <div class="form-group mt-2">
                                                 <label>Category</label>
-                                                <select name="category" class="form-control">
+                                                <select name="category" class="form-control" required>
                                                     <option value="">Please select</option>
                                                     <option value="1" id="1">Accessories</option>
                                                     <option value="2" id="2">Consoles</option>
@@ -182,8 +190,10 @@ if(!isset($_SESSION['name'])){
                                 crossorigin="anonymous"></script>
                             <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"
                                 integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d"
+                               
                                 crossorigin="anonymous"></script>
                             <!-- custom js -->
+
                             <script>
                             var menu_btn = document.querySelector("#menu-btn")
                             var sidebar = document.querySelector("#sidebar")
@@ -212,9 +222,11 @@ if(!isset($_SESSION['name'])){
                                 document.getElementById("update_button").style.display = "none";
                                 document.getElementById("save_button").style.display = "block";
                             }
-                            
+                           
                             </script>
-</div>
+                            
+
+</div><script src="main.js"></script>
 </body>
 
 </html>

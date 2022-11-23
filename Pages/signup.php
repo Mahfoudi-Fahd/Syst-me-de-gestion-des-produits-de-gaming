@@ -21,9 +21,13 @@ $query= "INSERT INTO signup(Name,Email,Password)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css"/>
+    <script defer  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script defer src="https://parsleyjs.org/dist/parsley.min.js"></script>
 </head>
 <body>
-<form  action = "" method ="POST" class="bg-image" style="background-image: url('https://www.heet.org.uk/wp-content/uploads/2016/06/gradient-background-26046-26731-hd-wallpapers.jpg.png'); height: 100vh">
+<form  action = "" method ="POST" class="bg-image" style="background-image: url('https://www.heet.org.uk/wp-content/uploads/2016/06/gradient-background-26046-26731-hd-wallpapers.jpg.png'); height: 100vh" data-parsley-validate>
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -33,12 +37,12 @@ $query= "INSERT INTO signup(Name,Email,Password)
                     <input type="name" name="name" placeholder="Username " class="form-control form-control-lg" required/>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="email" name="email" placeholder="email " class="form-control form-control-lg" required/>
+                    <input type="email" name="email" placeholder="email " class="form-control form-control-lg" data-parsley-type="email" required/>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="password" name="password" placeholder="Password"class="form-control form-control-lg" required />
-                </div>
+                <input class="input form form-control" type="password" name="password" data-parsley-minlength="8" required> 
+                           </div>
 
           
                 <div class="d-flex justify-content-center ">
